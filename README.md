@@ -13,7 +13,7 @@
 - [awk](https://www.gnu.org/software/gawk/gawk.html)
 
 
-## Usage
+## Usage
 
 ```
 $ crunch <image 1> … <image n>
