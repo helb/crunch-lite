@@ -8,7 +8,7 @@
 - zsh or bash
 - `mktemp` from [coreutils](https://www.gnu.org/software/coreutils/coreutils.html)
 - [pngquant](https://pngquant.org/)
-- [zopfli](https://github.com/google/zopfli/)
+- [zopfli](https://github.com/google/zopfli/), for better results use @chrissimpkins’ [zopfli fork](https://github.com/chrissimpkins/zopfli) ([gentoo ebuild in my overlay](https://github.com/helb/gentoo-overlay/tree/master/app-arch/zopfli-chrissimpkins))
 - [file](https://www.darwinsys.com/file/)
 - [awk](https://www.gnu.org/software/gawk/gawk.html)
 
