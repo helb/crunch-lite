@@ -21,7 +21,7 @@ PNGQUANT_BIN=$(command -v pngquant)
 ZOPFLIPNG_BIN=$(command -v zopflipng)
 AWK_BIN=$(command -v awk)
 PNGQUANT_OPTS="--quality=80-98 --force --strip --speed 1"
-ZOPFLIPNG_OPTS="-m -y --lossy_transparent --filters=0"
+ZOPFLIPNG_OPTS="-y --filters=0"
 
 args=("$@")
 for ((i=0; i < $#; i++)) {
@@ -38,6 +38,12 @@ for ((i=0; i < $#; i++)) {
     >&2 echo -n "Optimizing ${file} ... ${size_orig} "
     intermed=$(mktemp)
     ${PNGQUANT_BIN} ${PNGQUANT_OPTS} "${file}" --output "${intermed}"
+    if [ "$?" -eq 98 ] || [ "$?" -eq 99 ]; then
+	# 98: output is bigger than input
+	# 99: quality falls below the min value
+        ZOPFLIPNG_OPTS="-y --lossy_transparent";
+	cp "${file}" "${intermed}";
+    fi
     >&2 echo -n "-> $(du "${intermed}" | cut -f1) "
     ${ZOPFLIPNG_BIN} ${ZOPFLIPNG_OPTS} "${intermed}" "${file}" > /dev/null
     rm "${intermed}"
