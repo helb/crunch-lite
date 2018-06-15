@@ -37,8 +37,11 @@ for ((i=0; i < $#; i++)) {
     size_orig=$(du "${file}" | cut -f1)
     >&2 echo -n "Optimizing ${file} ... ${size_orig} "
     intermed=$(mktemp)
+    set +e;
     ${PNGQUANT_BIN} ${PNGQUANT_OPTS} "${file}" --output "${intermed}"
-    if [ "$?" -eq 98 ] || [ "$?" -eq 99 ]; then
+    quant_ret=$?;
+    set -e;
+    if [ ${quant_ret} -eq 98 ] || [ ${quant_ret} -eq 99 ]; then
 	# 98: output is bigger than input
 	# 99: quality falls below the min value
         ZOPFLIPNG_OPTS="-y --lossy_transparent";
